@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game List</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .game-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .game-item {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .game-item-info {
+            padding: 15px;
+        }
+
+        .game-item-info h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+
+        .game-item-info p {
+            margin: 0;
+            color: #666;
+        }
+
+        .game-item-info a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .game-item-info a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'game_list' %}">Home</a></li>
+                    <li><a href="{% url 'recent_releases' %}">Recent Releases</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Game List</h1>
+            <div class="game-list">
+                {% for game in games %}
+                    <div class="game-item">
+                        <img src="{{ game.image }}" alt="{{ game.title }} Cover" width="400px">
+                        <div class="game-item-info">
+                            <h3>{{ game.title }}</h3>
+                            <p>Release Date: {{ game.release_date }}</p>
+                            <a href="{% url 'game_detail' game.pk %}">View Details</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No games available.</p>
+                {% endfor %}
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; {{ current_year }} Steam Project. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
